@@ -20,7 +20,7 @@ with st.sidebar:
     </center>""", unsafe_allow_html=True)
     
     # 系统消息配置，用户可以自定义系统消息
-    system_message = st.text_area("System Message", value="我是米塔, 你可以问我任何问题🤣")
+    system_message = st.text_area("定义角色", value="我是米塔, 你可以问我任何问题🤣")
     
     # 创造性调节器，调整生成内容的创意性
     temperature = st.slider("Creativity", min_value=0.0, max_value=2.0, value=1.0, step=0.1,
