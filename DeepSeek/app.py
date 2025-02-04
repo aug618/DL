@@ -1,29 +1,26 @@
 # app.py
 import streamlit as st
-from config_reader import read_config
 from file_processor import process_file
 from chat_stream import chat_stream
 from chat_history_manager import add_message_to_history
 from openai import OpenAI
-# 读取配置文件
-config = read_config()
-api_key = config['openai']['api_key']
-base_url = config['openai']['base_url']
 
-# 侧边栏 UI 配置
+
 with st.sidebar:
-    st.markdown(f""" 
+    st.markdown(""" 
     <center>
     <img src="https://i.ibb.co/MgBss0Q/1.webp" alt="1" border="0" width="250" height="220">
-    <h1>DeepSeek-V3<sup>💬</sup></h1>
+    <h1><sup>极恶贝利亚💬</sup></h1>
     </center>""", unsafe_allow_html=True)
-    
-    system_message = st.text_area("定义角色", value="我是米塔, 你可以问我任何问题🤣")
-    temperature = st.slider("Creativity", min_value=0.0, max_value=2.0, value=1.0, step=0.1,
-                            help="The higher the value, the more creative the text will be.")
+
+    system_message = st.text_area("定义角色", value="我是贝利亚, 你可以问我任何问题🤣")
+    temperature = st.slider("Creativity", min_value=0.0, max_value=2.0, value=1.0, step=0.1)
+    api_key = st.sidebar.text_input('OpenAI API Key', type='password')
+    base_url = st.sidebar.text_input('OpenAI Base URL')
 
 # 主界面设置
-st.title("🦜米塔助手")
+st.title("🐔邪恶贝利亚")
+
 
 # 上传文件
 uploaded_files = st.file_uploader("上传文件", type=["txt", "pdf", "docx"], accept_multiple_files=True)
@@ -39,10 +36,7 @@ for file in uploaded_files:
 
 # 使用 session_state 初始化聊天记录
 if "chat_history" not in st.session_state:
-    st.session_state.chat_history = [{
-        "role": "assistant",
-        "content": "我是米塔, 你可以问我任何问题🤣"
-    }]
+    st.session_state.chat_history = []
 
 # 显示聊天记录
 for message in st.session_state.chat_history:
