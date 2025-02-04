@@ -1,22 +1,19 @@
 # 简易LLM助手项目
 
-这是一个用于聊天应用和文件处理的LLM简易项目。首次使用前务必填好config.ini文件。
+这是一个用于聊天应用和文件处理的LLM简易项目。
 
 **项目文件详细描述:**
 
-- `DeepSeek/file_processor.py`: **文件处理模块**，负责处理上传的 txt, pdf, docx 文件，提取文件内容。
 - `DeepSeek/app.py`: **主应用程序文件**，使用 Streamlit 框架构建用户界面，处理用户输入和显示聊天记录。
+- `DeepSeek/file_processor.py`: **文件处理模块**，负责处理上传的 txt, pdf, docx 文件，提取文件内容。
 - `DeepSeek/chat_history_manager.py`: **聊天历史管理模块**，负责管理聊天历史记录，添加新的消息到历史记录中。
 - `DeepSeek/chat_stream.py`: **聊天流处理模块**，负责处理与 OpenAI API 的交互，获取聊天机器人的流式响应。
-- `DeepSeek/config_reader.py`: **配置文件读取模块**，负责读取 `config.ini` 配置文件中的 API 密钥和基础 URL 等配置信息。
-- `DeepSeek/config.ini`: **配置文件**，用于配置 OpenAI格式 API 的密钥 (`api_key`) 和基础 URL (`base_url`)。
-- `DeepSeek/test.ipynb`: **测试用的 Jupyter Notebook**，包含用于测试和实验的代码。
-- `DeepSeek/token_counter.py`: **Token 计数模块**，可能用于计算文本中的 token 数量，但代码中没有直接使用，可能是预留模块。
-- `DeepSeek/imgs/`: **图片资源目录**，包含应用界面中使用的图片资源，例如 `1.webp` 和 `2.jpg`。
+- `DeepSeek/token_counter.py`: **Token 计数模块**，用于计算文本中的 token 数量。
+- `DeepSeek/imgs/`: **图片资源目录**，包含应用界面中使用的图片资源。
 
 **描述:**
 
-该项目旨在构建一个能够处理文件并提供聊天功能的应用程序。它包含了文件处理、聊天历史管理、配置读取等模块，并提供了一个测试用的 Jupyter Notebook。
+该项目旨在构建一个能够处理文件并提供聊天功能的AI应用。它包含了文件处理、聊天历史管理等模块。
 ![主界面](DeepSeek/imgs/home.png)
 **如何运行:**
 
@@ -27,8 +24,7 @@
    ```
 
 2. **配置 API 密钥:**
-   - 复制 `config.ini` 文件，并根据你的 OpenAI API 密钥和基础 URL 修改 `config.ini` 文件。
-   - 确保在 `config.ini` 文件中配置正确的 `api_key` 和 `base_url`。
+   - 在应用启动时，在侧边栏中输入你的 OpenAI API 密钥和基础 URL。
 
 3. **运行应用:**
    在项目根目录下运行以下命令启动 Streamlit 应用：
@@ -48,17 +44,9 @@ streamlit
 openai
 python-docx
 PyPDF2
+tiktoken
+...
 ```
-
-**config.ini 示例**
-
-```ini
-[openai]
-api_key=YOUR_API_KEY
-base_url=YOUR_BASE_URL
-```
-
-请将 `YOUR_API_KEY` 替换为你的 OpenAI API 密钥，`YOUR_BASE_URL` 替换为你的 API 基础 URL。
 
 **项目功能**
 
@@ -73,6 +61,7 @@ base_url=YOUR_BASE_URL
 1. **启动应用后，在侧边栏进行设置:**
    - 在 "定义角色" 文本框中输入你希望聊天机器人扮演的角色。
    - 使用 "Creativity" 滑块调整创造力参数。
+   - 输入 OpenAI API 密钥和基础 URL。
 
 2. **上传文件 (可选):**
    - 点击 "上传文件" 按钮，选择 txt, pdf, docx 格式的文件上传。
@@ -93,3 +82,17 @@ base_url=YOUR_BASE_URL
 - 配置正确的 OpenAI API 密钥和基础 URL。
 - 上传文件支持 txt, pdf, docx 格式。
 - 侧边栏可以自定义角色设定和创造力 (Temperature) 参数。
+
+**新增功能**
+
+- **聊天历史修剪:** 应用会自动修剪聊天历史记录，以确保总 token 数量不超过指定的最大值，从而优化性能。
+- **多文件处理:** 支持同时上传和处理多个文件，提取的文本内容将作为聊天机器人的上下文信息。
+- **流式响应:** 聊天机器人的回复将以流式方式显示，提供更好的用户体验。
+
+**文件结构**
+
+- `DeepSeek/token_counter.py`: **Token 计数模块**，用于计算文本中的 token 数量。
+- `DeepSeek/chat_history_manager.py`: **聊天历史管理模块**，负责修剪聊天历史记录，确保总 token 数量不超过指定的最大值。
+- `DeepSeek/chat_stream.py`: **聊天流处理模块**，负责处理与 OpenAI API 的交互，获取聊天机器人的流式响应。
+
+

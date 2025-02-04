@@ -1,5 +1,4 @@
 # chat_stream.py
-from openai import OpenAI
 from chat_history_manager import trim_chat_history
 
 def chat_stream(client, query, system_message=None, temperature=0.5, context=None, chat_history=None):
